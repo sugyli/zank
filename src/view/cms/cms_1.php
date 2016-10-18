@@ -1,3 +1,0 @@
-gdgdg
-<?php
- $cc;

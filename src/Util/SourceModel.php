@@ -17,6 +17,7 @@ class SourceModel
      * @var object
      **/
     protected static $_instance;
+    private $data = array();
     /**
      * 获取单例对象
      *
@@ -35,161 +36,48 @@ class SourceModel
     /**
      * 获取指定资源，并格式化输出
      */
-   public function getSourceInfo($_datas, $type = "",$charset = 'utf-8', $contentType = 'text/html')
+   public function getSourceInfo($_datas, $type = "")
     {   
+       
         $type = strtolower($type);//转化小写
+        $htmls = "";
         switch ($type) {
-            case 'cms':
-            $htmls = "";
-            foreach ($_datas as $key => $_data) {
-               $pics =  $this->getEditorImages($_data['content']);
-               if (!empty($pics)) {
-                   $htmls .=  <<<Eof
-                          <ul data-node="listBox" class="listBox">
-                            <li class="item clearfix" data-node="item">
-                              <div class="item-inner">
-                                <div class="lbox left">
-                                  <a href="/news_hot/2678.html" target="_blank">
-                                  <img class="feedimg" src="{$pics['pic_url_small']}" onload="this.style.opacity=1;" style="opacity: 1;">
-                                  </a>
-                                </div>
-                                <div class="rbox"><!--hold-->
-                                  <div class="rbox-inner">
-                                    <div class="title-box">
-                                      <a ga_event="click_feed_newstitle" class="link title" href="/news_hot/2678.html" target="_blank" data-node="title">
-                                       {$_data['title']} </a>
-                                    </div>
-                                    <!--
-                                    <div class="abstract">
-                                      <a ga_event="click_feed_newsabstract" class="link" href="/news_hot/2678.html" target="_blank">asdfasdfasdf</a>
-                                    </div>-->
-                                    <div class="footer clearfix">
-                                      <div class="left lfooter">
-                                        <a class="lbtn source" href="javascript:;">&nbsp;</a>
-                                        <span class="lbtn comment"></span>
-                                        <span class="lbtn time">{$_data['updated_at']}</span>
-                                      </div>
-                                      <div class="right rfooter">
-                                        <span data-node="likeGroup" class="">
-                                        
-                                          <a class="rbtn bury" href="javascript:;" title="踩" onclick="makeRequest('/e/public/digg?classid=1&id=2678&dotop=1&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"></a>
-                                          <a class="rbtn digg" href="javascript:;" title="顶" onclick="makeRequest('/e/public/digg?classid=1&id=2678&dotop=0&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"></a>
-                                        </span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-Eof;
-               }else{
-                    $htmls .=  <<<Eof
-                         <ul data-node="listBox" class="listBox">
-                            <!--第二种消息-->
-                            <li class="item clearfix" data-node="item">  
-                              <div class="item-inner">
-                                <div class="rbox-inner">         
-                                  <div class="title-box">
-                                    <a ga_event="click_feed_newstitle" class="link title" href="/news_hot/2679.html" target="_blank" data-node="title">
-                                      {$_data['title']}</a>
-                                  </div>
-                                  <div class="footer clearfix">
-                                        <div class="left lfooter">
-                                          <a class="lbtn source" href="javascript:;">&nbsp;</a>
-                                          <span class="lbtn comment"></span>
-                                          <span class="lbtn time">{$_data['updated_at']}</span>
-                                        </div>
-                                        <div class="right rfooter">
-                                          <span data-node="likeGroup" class="">
-                                          
-                                            <a class="rbtn bury" href="javascript:;" title="踩" onclick="makeRequest('/e/public/digg?classid=1&id=2679&dotop=1&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"></a>
-                                            <a class="rbtn digg" href="javascript:;" title="顶" onclick="makeRequest('/e/public/digg?classid=1&id=2679&dotop=0&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"></a>
-                                          </span>
-                                        </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>            
-                          </ul>
-Eof;
-                }              
-            }
-            break;
-            case 'cms_ajax':
-            $htmls = "";
-            foreach ($_datas as $key => $_data) {
-               $pics =  $this->getEditorImages($_data['content']);
-               if (!empty($pics)) {
-                   $htmls .=  <<<Eof
+          case 'cms':
+          $file1 = "cms". DS . "cms_1.html";
+          $file2 = "cms". DS . "cms_2.html";
+          foreach ($_datas as $key => $_data) 
+          {
+            $pics =  $this->getEditorImages($_data['content']);
+            if (!empty($pics)) 
+            {
+              $this->assign("pic_url_small",$pics['pic_url_small']);
+              $htmls .= $this->display($file1,$_data);
 
-                          <li class="item clearfix" data-node="item" rel="loaded">
-                            <div class="item-inner">
-                              <div class="lbox left">
-                                <a href="/news_hot/2678.html" target="_blank">
-                                <img class="feedimg" src="{$pics['pic_url_small']}" onload="this.style.opacity=1;" style="opacity: 1;">
-                                </a>
-                              </div>
-                              <div class="rbox"><!--hold-->
-                                <div class="rbox-inner">
-                                  <div class="title-box">
-                                    <a ga_event="click_feed_newstitle" class="link title" href="/news_hot/2678.html" target="_blank" data-node="title">
-                                     {$_data['title']} </a>
-                                  </div>
-                                  <!--
-                                  <div class="abstract">
-                                    <a ga_event="click_feed_newsabstract" class="link" href="/news_hot/2678.html" target="_blank">asdfasdfasdf</a>
-                                  </div>-->
-                                  <div class="footer clearfix">
-                                    <div class="left lfooter">
-                                      <a class="lbtn source" href="javascript:;">&nbsp;</a>
-                                      <span class="lbtn comment"></span>
-                                      <span class="lbtn time">{$_data['updated_at']}</span>
-                                    </div>
-                                    <div class="right rfooter">
-                                      <span data-node="likeGroup" class="">
-                                      
-                                        <a class="rbtn bury" href="javascript:;" title="踩" onclick="makeRequest('/e/public/digg?classid=1&id=2678&dotop=1&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"></a>
-                                        <a class="rbtn digg" href="javascript:;" title="顶" onclick="makeRequest('/e/public/digg?classid=1&id=2678&dotop=0&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"></a>
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </li>                       
-Eof;
-               }else{
-                    $htmls .=  <<<Eof
-                            <li class="item clearfix" data-node="item" rel="loaded">
-                              <div class="item-inner">
-                                <div class="rbox-inner">         
-                                  <div class="title-box">
-                                    <a ga_event="click_feed_newstitle" class="link title" href="/news_hot/2679.html" target="_blank" data-node="title">
-                                      {$_data['title']}</a>
-                                  </div>
-                                  <div class="footer clearfix">
-                                        <div class="left lfooter">
-                                          <a class="lbtn source" href="javascript:;">&nbsp;</a>
-                                          <span class="lbtn comment"></span>
-                                          <span class="lbtn time">{$_data['updated_at']}</span>
-                                        </div>
-                                        <div class="right rfooter">
-                                          <span data-node="likeGroup" class="">
-                                          
-                                            <a class="rbtn bury" href="javascript:;" title="踩" onclick="makeRequest('/e/public/digg?classid=1&id=2679&dotop=1&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"></a>
-                                            <a class="rbtn digg" href="javascript:;" title="顶" onclick="makeRequest('/e/public/digg?classid=1&id=2679&dotop=0&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"></a>
-                                          </span>
-                                        </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>            
-Eof;
-                }              
+            }else{
+              $htmls .= $this->display($file2,$_data);
+
             }
-            break;
+          }                 
+          break;
+          case 'cms_ajax': 
+          $file1 = "cms". DS . "cms_ajax_1.html";
+          $file2 = "cms". DS . "cms_ajax_2.html";
+          foreach ($_datas as $key => $_data) 
+          {
+            $pics =  $this->getEditorImages($_data['content']);
+            if (!empty($pics)) 
+            {
+              $this->assign("pic_url_small",$pics['pic_url_small']);
+              $htmls .= $this->display($file1,$_data);
+
+            }else{
+              $htmls .= $this->display($file2,$_data);
+
+            }
+          }
+          break;
         }
+
         return $htmls;
     }
 
@@ -234,5 +122,38 @@ Eof;
         }
         */
         return $info;
+    }
+
+
+    private function assign($name, $value) {
+      $this->data[$name] = $value;
+    }
+
+    private function display($file ,$data = array()) {
+      $file = VIEW . $file;
+
+      $content = "";
+      if (file_exists($file)) {
+          $content = file_get_contents($file);
+
+          if(!empty($data))
+          {
+            foreach($data as $key=>$value) 
+            {  
+                $content = str_replace("{" . $key . "}", $value, $content);
+
+            }
+          }
+          
+          if(!empty($this->data))
+          {
+            foreach($this->data as $key=>$value) 
+            {
+                $content = str_replace("{" . $key . "}", $value, $content);
+            }
+          }          
+      }
+
+      return $content;
     }
 } // END class Message

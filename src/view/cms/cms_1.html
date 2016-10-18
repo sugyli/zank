@@ -1,0 +1,37 @@
+<ul data-node="listBox" class="listBox">
+  <li class="item clearfix" data-node="item">
+    <div class="item-inner">
+      <div class="lbox left">
+        <a href="/news_hot/2678.html" target="_blank">
+        <img class="feedimg" src="{pic_url_small}" onload="this.style.opacity=1;" style="opacity: 1;">
+        </a>
+      </div>
+      <div class="rbox"><!--hold-->
+        <div class="rbox-inner">
+          <div class="title-box">
+            <a ga_event="click_feed_newstitle" class="link title" href="/news_hot/2678.html" target="_blank" data-node="title">
+            {title} </a>
+          </div>
+          <!--
+          <div class="abstract">
+            <a ga_event="click_feed_newsabstract" class="link" href="/news_hot/2678.html" target="_blank">asdfasdfasdf</a>
+          </div>-->
+          <div class="footer clearfix">
+            <div class="left lfooter">
+              <a class="lbtn source" href="javascript:;">&nbsp;</a>
+              <span class="lbtn comment"></span>
+              <span class="lbtn time">{updated_at}</span>
+            </div>
+            <div class="right rfooter">
+              <span data-node="likeGroup" class="">
+              
+                <a class="rbtn bury" href="javascript:;" title="踩" onclick="makeRequest('/e/public/digg?classid=1&id=2678&dotop=1&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"></a>
+                <a class="rbtn digg" href="javascript:;" title="顶" onclick="makeRequest('/e/public/digg?classid=1&id=2678&dotop=0&doajax=1&ajaxarea=diggnum','EchoReturnedText','GET','');"></a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>

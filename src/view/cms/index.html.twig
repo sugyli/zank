@@ -23,12 +23,10 @@
 
 
 <script>
-var curpage = 1;
-    var totalpage = 102;
-    var geturl = '/e/extend/list/?classid=1,12,13,14,15,16,17,18,19,11,10,2,3,4,5,6,7,8,9,21,&orderby=newstime&page=';
+    var curpage = 1;
+    var totalpage = {{ total }};
+    var geturl = '/api/cms/';
 </script>
-
-
 
 </head>
 <body class="v2016">
@@ -312,8 +310,8 @@ var curpage = 1;
   </div>
 <!--wrapper_end-->
 <script>
-  var IsMousedown,LEFT,TOP,lggood;
-  document.getElementById("Mdown").onmousedown=function(e){
+    var IsMousedown,LEFT,TOP,lggood;
+    document.getElementById("Mdown").onmousedown=function(e){
     lggood = document.getElementById("lggoodBox");
     IsMousedown = true;
     e = e||event;
@@ -331,8 +329,8 @@ var curpage = 1;
       IsMousedown=false;
     }
   }
-  window.scrollTo(0, 0);
 
+  window.scrollTo(0, 0);
   window.gaqpush = function (ga_action, ga_label){
       ga('send', 'event','/' , ga_action, ga_label);
   };

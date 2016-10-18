@@ -25,13 +25,15 @@ class Cms extends Controller
         $sortdata = $cmssorts->toArray();
         //获取内容
         $cmss = \Zank\Model\Cms::pageData();
+        $total = \Zank\Model\Cms::$total;
         $cmsdata = $cmss->toArray();
         $html = \Zank\Util\SourceModel::getInstance()->getSourceInfo($cmsdata,'cms');
-
+       
         return $this->ci->view
                         ->render($response, 'cms/index.html.twig', [
                             'sortdatas' => $sortdata,
-                            'htmls'  => $html
+                            'htmls'  => $html,
+                            'total' => $total
                         ]);
         unset($html);
     }

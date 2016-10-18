@@ -19,7 +19,7 @@ class Cms extends Model
 
     protected $primaryKey = 'cms_id';
     protected $hidden = ['deleted_at'];
-
+    public static $total = 1;
     /**
      * 用于设置查询条件为cms_id的快捷方法.
      *
@@ -47,8 +47,8 @@ class Cms extends Model
     public static function pageData(int $page = 1 ,int $pagesize = 15)
     {
 
-        $total = self::counts();
-        if($total>0)
+        $total= self::$total = self::counts();
+        if($total >0)
         {
             //计算总页数
             $pagenum = ceil( $total / $pagesize );//当没有数据的时候 计算出来为0
